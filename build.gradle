@@ -33,6 +33,12 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
 
+    // Spring JPA
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: '2.5.1'
+
+    // H2
+    testImplementation group: 'com.h2database', name: 'h2', version: '1.4.200'
+
     // Spring REST Docs
     asciidoctor 'org.springframework.restdocs:spring-restdocs-asciidoctor'
 
