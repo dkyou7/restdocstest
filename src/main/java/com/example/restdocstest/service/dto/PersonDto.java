@@ -13,7 +13,7 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class PersonDto {
 
     @Getter
@@ -25,6 +25,16 @@ public class PersonDto {
             this.persons = persons;
         }
 
+    }
+
+    @Getter
+    public static class ResponseOne {
+
+        private Response person;
+
+        public ResponseOne(Response person) {
+            this.person = person;
+        }
     }
 
     @Getter
@@ -61,4 +71,5 @@ public class PersonDto {
                     .build();
         }
     }
+
 }

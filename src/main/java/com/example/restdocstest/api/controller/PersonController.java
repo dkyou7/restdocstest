@@ -5,6 +5,7 @@ import com.example.restdocstest.service.PersonService;
 import com.example.restdocstest.service.dto.PersonDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,4 +21,8 @@ public class PersonController {
         return ApiResponseDto.createOK(new PersonDto.ResponseList(personService.findAll()));
     }
 
+    @GetMapping("{id}")
+    public ApiResponseDto<PersonDto.ResponseOne> findById(@PathVariable("id") Long id){
+        return ApiResponseDto.createOK(new PersonDto.ResponseOne(personService.findById(id)));
+    }
 }
