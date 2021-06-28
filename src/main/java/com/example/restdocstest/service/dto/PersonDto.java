@@ -2,13 +2,12 @@ package com.example.restdocstest.service.dto;
 
 import com.example.restdocstest.domain.Gender;
 import com.example.restdocstest.domain.Person;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.apache.coyote.Response;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
@@ -72,4 +71,51 @@ public class PersonDto {
         }
     }
 
+    @Setter
+    @Getter
+    public static class Create {
+
+        @NotEmpty
+        private String firstName;
+        @NotEmpty
+        private String lastName;
+        @NotNull
+        private Gender gender;
+        @NotNull
+        //@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
+        @DateTimeFormat(pattern = "yyyy-MM-dd")
+        private LocalDate birthDate;
+
+        private String hobby;
+
+        public Person toEntity() {
+            return Person.builder()
+                    .firstName(firstName)
+                    .lastName(lastName)
+                    .gender(gender)
+                    .birthDate(birthDate)
+                    .hobby(hobby)
+                    .build();
+        }
+    }
+
+    @Setter
+    @Getter
+    public static class Update {
+
+        @NotEmpty
+        private String firstName;
+        @NotEmpty
+        private String lastName;
+        @NotNull
+        //@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
+        @DateTimeFormat(pattern = "yyyy-MM-dd")
+        private LocalDate birthDate;
+
+        private String hobby;
+
+        public Person apply(Person person) {
+            return person.update(firstName, lastName, birthDate, hobby);
+        }
+    }
 }
