@@ -15,6 +15,8 @@ public class ApiResponseDto<T> {
     private String message;
     private T data;
 
+
+
     private void bindStatus(ApiResponseCode status) {
         this.code = status;
         this.message = status.getMessage();
@@ -36,11 +38,22 @@ public class ApiResponseDto<T> {
         this.message = e.getMessage();
     }
 
+    // createException 와 관련있음 2
+    private ApiResponseDto(ApiResponseCode code, String message, T data) {
+        this.code = code;
+        this.message = message;
+        this.data = data;
+    }
+
     public static <T> ApiResponseDto<T> createOK(T data) {
         return new ApiResponseDto<>(ApiResponseCode.OK, data);
     }
 
     public static ApiResponseDto<String> createException(ApiException e) {
         return new ApiResponseDto<>(e.getStatus(), e);
+    }
+
+    public static ApiResponseDto<String> createException(ApiResponseCode code, String message) {
+        return new ApiResponseDto<>(code, message, "");
     }
 }
