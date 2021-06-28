@@ -15,22 +15,32 @@ public class ApiResponseDto<T> {
     private String message;
     private T data;
 
-    private ApiResponseDto(ApiResponseCode status) {
-        this.bindStatus(status);
-    }
-
-    // 33~35 code 와 관련있음
-    private ApiResponseDto(ApiResponseCode status, T data) {
-        this.bindStatus(status);
-        this.data = data;
-    }
-
     private void bindStatus(ApiResponseCode status) {
         this.code = status;
         this.message = status.getMessage();
     }
 
+    private ApiResponseDto(ApiResponseCode status) {
+        this.bindStatus(status);
+    }
+
+    // createOK 와 관련있음
+    private ApiResponseDto(ApiResponseCode status, T data) {
+        this.bindStatus(status);
+        this.data = data;
+    }
+
+    // createException 와 관련있음
+    private ApiResponseDto(ApiResponseCode code, ApiException e) {
+        this.code = code;
+        this.message = e.getMessage();
+    }
+
     public static <T> ApiResponseDto<T> createOK(T data) {
         return new ApiResponseDto<>(ApiResponseCode.OK, data);
+    }
+
+    public static ApiResponseDto<String> createException(ApiException e) {
+        return new ApiResponseDto<>(e.getStatus(), e);
     }
 }
