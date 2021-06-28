@@ -1,6 +1,7 @@
 package com.example.restdocstest.api.advice;
 
 import com.example.restdocstest.api.controller.PersonController;
+import com.example.restdocstest.exception.NotFoundException;
 import com.example.restdocstest.response.ApiException;
 import com.example.restdocstest.response.ApiResponseCode;
 import com.example.restdocstest.response.ApiResponseDto;
@@ -28,5 +29,13 @@ public class ApiCommonAdvice {
     public ApiResponseDto<String> handleBaseException(ConstraintViolationException e) {
 
         return ApiResponseDto.createException(ApiResponseCode.BAD_PARAMETER, "파라미터가 잘못됐습니다.");
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler({NotFoundException.class})
+    public ApiResponseDto<String> handleValidException(NotFoundException e) {
+        ApiResponseDto<String> exception = ApiResponseDto.createException(new ApiException(ApiResponseCode.NOT_FOUND, e.getMessage()));
+        log.error("[{}] {}", ApiResponseCode.NOT_FOUND.getId(), exception);
+        return exception;
     }
 }
