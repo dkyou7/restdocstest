@@ -56,4 +56,8 @@ public class ApiResponseDto<T> {
     public static ApiResponseDto<String> createException(ApiResponseCode code, String message) {
         return new ApiResponseDto<>(code, message, "");
     }
+
+    public static <T> ApiResponseDto<T> createException(ApiResponseCode code, T data) {
+        return new ApiResponseDto<>(code, data);
+    }
 }
